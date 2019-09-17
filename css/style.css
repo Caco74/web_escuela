@@ -36,6 +36,32 @@ label {
     font-family: 'Calibri';
 }
 
+#contenedor_lista {
+    width: 100%;
+    background-color: whitesmoke;
+    min-height: 5em;
+    border-radius: 5px;
+}
+
+#contenedor_lista a {
+    color: blue;
+}
+
+#contenido_pasados {
+    width: 100%;
+    background-color: whitesmoke;
+    min-height: 5em;
+    border-radius: 5px;
+}
+
+#contenido_pasados a {
+    color: black;
+}
+
+#contenido_pasados h4 {
+    color: black;
+}
+
 
 
 
