@@ -1,6 +1,6 @@
-// Hemos omitido los acentos en los comentarios por compatibilidad
-
-//Define las variables que necesites
+let proximos = [];
+let hoy;
+let eventos;
 
 $(document).ready(function () {
 
@@ -8,27 +8,69 @@ $(document).ready(function () {
   $.ajax({
     url: 'info.json'
   }).done(function (resultado) {
-    fechaRef = resultado.fechaActual;
-    datos = resultado.eventos;
-    let prx = document.getElementById('proximos');
-    prx.innerHTML = "";
-    for (let item of datos) {
-      console.log(item.fecha);
-      if (item.fecha > fechaRef) {
-        prx.innerHTML += `<ul><li class="lead" style="list-style-type: square;">${item.fecha}|</li></ul>`
+
+    //Guarda el resultado en variables
+    hoy = resultado.fechaActual;
+    eventos = resultado.eventos;
+
+    //Selecciona los eventos que sean anteriores a la fecha actual del JSON
+
+    for (let item of eventos) {
+      if (item.fecha > hoy) {
+        proximos.push(item);
       }
     }
-  })
-  //Guarda el resultado en variables
 
-  //Selecciona los eventos que sean posteriores a la fecha actual del JSON
+    //Ordena los eventos según la fecha (Los más recientes primero)
+    proximos = proximos.sort(function (x, y) {
+      if (x.fecha > y.fecha) {
+        return 1;
+      }
+      return -1;
+    });
 
-  //Ordena los eventos segun la fecha (los mas cercanos primero)
+    //Crea un string que contenga el HTML que describe el detalle del evento
+    var html = "";
 
-  //Crea un string que contenga el HTML que describe el detalle del evento
+    //Recorrer el arreglo y concatena el HTML para cada evento
+    var num = 0;
+    for (let item of proximos) {
+      html += `
+      <div id="contenedor_lista" class="row mb-3" style="display: block;">
+      <a class="p-2" href="#" id="${num}" style="padding: 0px !important">${item.nombre}</a><br>
+      <cite>${item.fecha + " - " + item.lugar}</cite><br>
+      <span>${item.descripcion}</span><br>
+      <p>${"Costo: " + item.precio}</p>
+      </div>
+      `
+      num++;
+    }
 
-  //Recorre el arreglo y concatena el HTML para cada evento
+    //Modifica el DOM agregando el html generado
+    document.getElementById('proximos').innerHTML = html;
 
-  //Modifica el DOM agregando el html generado dentro del div con id=evento
 
+    //Crear el contenedor que mostrará los eventos clikeados
+    $("#contenedor_lista .p-2").click(function () {
+      const ruta = $(this).attr("id");
+      //Buscar el link clikeado con el id que pertenece al evento!
+      let cont_proximos = document.getElementById('contenedor_lista');
+      cont_proximos.innerHTML = "";
+      for (let item of proximos) {
+        if (item.fecha > hoy) {
+          $("#proximos").html(
+            `
+              <div id="contenido_proximos" class="row mb-3" style="justify-content: center; display: block; text-align: center">
+              <h4>Lugar: ${proximos[ruta].lugar}</h4>
+              <h4>Nombre: ${proximos[ruta].nombre}</h4>
+              <h4>Descripcion: ${proximos[ruta].descripcion}</h4>
+              <h4>Costo: ${proximos[ruta].precio}</h4>
+              <h4>Invitados: ${proximos[ruta].invitados}</h4>
+              </div>
+            `
+          );
+        }
+      }
+    });
+  });
 });

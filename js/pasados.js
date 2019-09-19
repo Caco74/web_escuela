@@ -37,7 +37,7 @@ $(document).ready(function () {
     for (let item of pasados) {
       html += `
       <div id="contenedor_lista" class="row mb-3" style="display: block;">
-      <a class="p-2" href="#" id="${num}">${item.nombre}</a><br>
+      <a class="p-2" href="#" id="${num}" style="padding: 0px !important;">${item.nombre}</a><br>
       <cite>${item.fecha +" - "+ item.lugar}</cite><br>
       <span>${item.descripcion}</span><br>
       <p>${"Costo: " + item.precio}</p>
@@ -51,7 +51,7 @@ $(document).ready(function () {
 
 
     //Crear el contenedor que mostrará los eventos clikeados
-    $(".p-2").click(function(){
+    $("#contenedor_lista .p-2").click(function(){
       const ruta = $(this).attr("id");
       //Buscar el link clikeado con el id que pertenece al evento!
       let cont_pasado = document.getElementById('contenedor_lista');
