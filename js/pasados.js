@@ -52,11 +52,9 @@ $(document).ready(function () {
     //Crear el contenedor que mostrará los eventos clikeados
     $("#contenedor_evento .p-2").click(function () {
       const ruta = $(this).attr("id");
-      console.log(pasados[ruta].id);
       let finalPage = pasados[ruta].id;
       function reloadPage() {
         let identificador = finalPage;
-        console.log(identificador);
         location.replace('http://127.0.0.1:5500/detalle.html?id=' + identificador);
       }
       reloadPage();

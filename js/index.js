@@ -106,11 +106,9 @@ $(document).ready(function () {
     //Click en el hipervinculo lleva a la página detalles de eventos pasados seleccionado
     $("#pasados #contenedor_index .p-2").click(function () {
       const ruta = $(this).attr("id");
-      console.log(pasados[ruta].id);
       let finalPage = pasados[ruta].id;
       function reloadPage() {
         let identificador = finalPage;
-        console.log(identificador);
         location.replace('http://127.0.0.1:5500/detalle.html?id=' + identificador);
       }
       reloadPage();
