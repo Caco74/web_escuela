@@ -11,7 +11,7 @@ $(document).ready(function () {
   
   //Carga los datos que estan en el JSON (info.json) usando AJAX
   $.ajax({
-    url: 'info.json'
+    url: 'http://127.0.0.1:5500/info.json'
   }).done(function(resultado){
 
     //Guarda el resultado en variables
@@ -34,7 +34,6 @@ $(document).ready(function () {
       }
       return -1;
     });
-
     
     //Extrae solo dos eventos
     var ind_pasa = [pasados[0],pasados[1]];
@@ -66,6 +65,7 @@ $(document).ready(function () {
       }
       return -1;
     });
+
     //Extrae solo dos eventos
     let ind_prox = [proximos[0],proximos[1]];
     
@@ -74,6 +74,7 @@ $(document).ready(function () {
     
     //Recorre el arreglo y concatena el HTML para cada evento
     var num = 0;
+    
     for (let i of ind_prox) {
       html_prox += `
       <div id="contenedor_index" style="display: block;">
@@ -88,13 +89,31 @@ $(document).ready(function () {
   
     //Modifica el DOM agregando el html generado
     document.getElementById('proximos').innerHTML = html_prox;
+
+    //Click en el hipervinculo lleva a la página detalles de eventos proximos seleccionado
+    $("#proximos #contenedor_index .p-2").click(function () {
+      const ruta = $(this).attr("id");
+      console.log(proximos[ruta].id);
+      let finalPage = proximos[ruta].id;
+      function reloadPage() {
+        let identificador = finalPage;
+        console.log(identificador);
+        location.replace('http://127.0.0.1:5500/detalle.html?id=' + identificador);
+      }
+      reloadPage();
+    });
+
+    //Click en el hipervinculo lleva a la página detalles de eventos pasados seleccionado
+    $("#pasados #contenedor_index .p-2").click(function () {
+      const ruta = $(this).attr("id");
+      console.log(pasados[ruta].id);
+      let finalPage = pasados[ruta].id;
+      function reloadPage() {
+        let identificador = finalPage;
+        console.log(identificador);
+        location.replace('http://127.0.0.1:5500/detalle.html?id=' + identificador);
+      }
+      reloadPage();
+    });
   })
-
-
-
-  /* ------------------------------------------------------------------ */
-  /* Click en el hipervinculo , lleva a la pagina detalles de evento    */
-  /*                          Falta Hacer                               */
-  /*                                                                    */
-  /* ------------------------------------------------------------------ */
 });

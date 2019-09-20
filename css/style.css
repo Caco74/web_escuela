@@ -46,7 +46,19 @@ label {
     color: blue;
 }
 
-#contenedor_lista {
+#contenedor_evento {
+    background-color: whitesmoke;
+    border-radius: 5px;
+    min-height: 5em;
+    padding-left: 3%;
+    width: 100%;
+}
+                            
+#contenedor_evento a {
+    color: blue;
+}
+
+#contenedor_detalle {
     background-color: whitesmoke;
     border-radius: 5px;
     min-height: 5em;
@@ -54,15 +66,23 @@ label {
     width: 100%;
 }
 
-#contenedor_lista a {
-    color: blue;
+#contenedor_detalle h1 {
+    margin-bottom: 0;
+}
+
+#contenedor_detalle .costo {
+    margin-bottom: 0;
+}
+
+#contenedor_detalle .invitados {
+    color: rgb(216, 153, 43);
 }
 
 cite {
     color: grey;
 }
 
-#contenedor_index p, #contenedor_lista p {
+#contenedor_index p, #contenedor_detalle p {
     color: rgb(32, 186, 233);
 }
 

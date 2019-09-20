@@ -2,16 +2,16 @@ let proximos = [];
 let hoy;
 let eventos;
 
-$(document).ready(function () {
-
+$(document).ready(function () {  
+  
   //Carga los datos que estan en el JSON (info.json) usando AJAX
   $.ajax({
-    url: 'info.json'
+    url: 'http://127.0.0.1:5500/info.json'
   }).done(function (resultado) {
 
     //Guarda el resultado en variables
     hoy = resultado.fechaActual;
-    eventos = resultado.eventos;
+    eventos = resultado.eventos;    
 
     //Selecciona los eventos que sean anteriores a la fecha actual del JSON
 
@@ -36,7 +36,7 @@ $(document).ready(function () {
     var num = 0;
     for (let item of proximos) {
       html += `
-      <div id="contenedor_lista" class="row mb-3" style="display: block;">
+      <div id="contenedor_evento" class="row mb-3" style="display: block;">
       <a class="p-2" href="#" id="${num}" style="padding: 0px !important">${item.nombre}</a><br>
       <cite>${item.fecha + " - " + item.lugar}</cite><br>
       <span>${item.descripcion}</span><br>
@@ -47,30 +47,19 @@ $(document).ready(function () {
     }
 
     //Modifica el DOM agregando el html generado
-    document.getElementById('proximos').innerHTML = html;
-
-
-    //Crear el contenedor que mostrará los eventos clikeados
-    $("#contenedor_lista .p-2").click(function () {
+    document.getElementById('proximos').innerHTML = html;    
+    
+    //Click en el hipervinculo lleva a la página detalles del evento seleccionado
+    $("#contenedor_evento .p-2").click(function () {
       const ruta = $(this).attr("id");
-      //Buscar el link clikeado con el id que pertenece al evento!
-      let cont_proximos = document.getElementById('contenedor_lista');
-      cont_proximos.innerHTML = "";
-      for (let item of proximos) {
-        if (item.fecha > hoy) {
-          $("#proximos").html(
-            `
-              <div id="contenido_proximos" class="row mb-3" style="justify-content: center; display: block; text-align: center">
-              <h4>Lugar: ${proximos[ruta].lugar}</h4>
-              <h4>Nombre: ${proximos[ruta].nombre}</h4>
-              <h4>Descripcion: ${proximos[ruta].descripcion}</h4>
-              <h4>Costo: ${proximos[ruta].precio}</h4>
-              <h4>Invitados: ${proximos[ruta].invitados}</h4>
-              </div>
-            `
-          );
-        }
+      console.log(proximos[ruta].id);
+      let finalPage = proximos[ruta].id;
+      function reloadPage() {
+        let identificador = finalPage;
+        console.log(identificador);
+        location.replace('http://127.0.0.1:5500/detalle.html?id=' + identificador);
       }
+      reloadPage();
     });
   });
 });
